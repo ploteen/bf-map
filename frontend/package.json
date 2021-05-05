@@ -1,7 +1,7 @@
 {
-  "name": "bf-project",
+  "name": "frontend",
   "version": "1.0.0",
-  "description": "barrier free map project",
+  "description": "A Vue.js project",
   "author": "ploteen <ploteen@g.skku.edu>",
   "private": true,
   "scripts": {

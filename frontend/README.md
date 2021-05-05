@@ -1,6 +1,6 @@
-# bf-project
+# frontend
 
-> barrier free map project
+> A Vue.js project
 
 ## Build Setup
 
