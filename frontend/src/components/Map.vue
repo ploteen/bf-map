@@ -7,17 +7,24 @@ export default {
   name: 'Map',
   data () {
     return {
-      position: {}
+      positions: [
+        {
+          title: 'abcd',
+          latitude: 35.2787182404502,
+          longitude: 128.689282964033
+        }
+      ]
     }
   },
   methods: {
     initMap () {
       var container = document.getElementById('map')
-      var options = { center: new kakao.maps.LatLng(33.450701, 126.570667), level: 3 }
+      var options = { center: new kakao.maps.LatLng(35.2787182404502, 128.689282964033), level: 3 }
       var map = new kakao.maps.Map(container, options)
       // 마커추가하려면 객체를 아래와 같이 하나 만든다.
       var marker = new kakao.maps.Marker({
-        position: map.getCenter()
+        position: new kakao.maps.LatLng(this.positions[0].latitude, this.positions[0].longitude),
+        title: this.positions[0].title
       })
       marker.setMap(map)
     },
