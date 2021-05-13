@@ -9,11 +9,11 @@ var connection = mysql.createConnection({
     database : 'bf_free'
 })
 
-var sql = 'select title,lat,lon from barrier_free where lat is not NULL'
 
  
 router.get('/',function(req,res,next) {
     //connection.connect();
+    var sql = 'select title,lat,lon,stair,elevator,toilet from locations, titles,options where locations.idx = options.idx and locations.idx = titles.idx and lat is not NULL'
     connection.query(sql,function(err, rows, fields){
         let json_list = [];
         if(err){
@@ -25,6 +25,9 @@ router.get('/',function(req,res,next) {
                 temp.title = rows[i].title;
                 temp.lat = rows[i].lat;
                 temp.lon = rows[i].lon;
+                temp.stair = rows[i].stair;
+                temp.elevator = rows[i].elevator;
+                temp.toilet = rows[i].toilet;
                 json_list.push(temp);
             }
         }
@@ -32,5 +35,22 @@ router.get('/',function(req,res,next) {
     })
     // connection.end();
 })
-
+router.post('/update',function(req,res,next) {
+    //connection.connect();
+    var list = ['stair', 'elevator', 'toilet'];
+    for(var i = 0; i<list.length; i++){
+        if(req.body[list[i]] == true){
+            var sql = "update options set " + list[i] +" = true where idx = (select titles.idx from titles where titles.title = ?)"
+            connection.query(sql,[req.body.title], function(err, result, fields){
+                if(err){
+                    console.log(err);
+                    res.status(500).send('Internal Server Error');
+                }
+            })
+        }
+    }
+    console.log(req.body);
+    // connection.end();
+    res.send()
+})
 module.exports = router;
